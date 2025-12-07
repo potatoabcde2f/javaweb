@@ -53,7 +53,7 @@ public class UserServlet extends HttpServlet {
             }
         } catch (RuntimeException e) {
             req.setAttribute("errorMsg", e.getMessage());
-            req.getRequestDispatcher("src/webapp/WEB-INF/views/user/login.jsp").forward(req, resp);
+            req.getRequestDispatcher("WEB-INF/views/user/login.jsp").forward(req, resp);
         }
     }
 
@@ -68,21 +68,21 @@ public class UserServlet extends HttpServlet {
             if (success) {
                 // 注册成功跳转登录页
                 req.setAttribute("successMsg", "注册成功！请登录");
-                req.getRequestDispatcher("src/webapp/WEB-INF/views/user/login.jsp").forward(req, resp);
+                req.getRequestDispatcher("WEB-INF/views/user/login.jsp").forward(req, resp);
             } else {
                 req.setAttribute("errorMsg", "注册失败！");
-                req.getRequestDispatcher("src/webapp/WEB-INF/views/user/register.jsp").forward(req, resp);
+                req.getRequestDispatcher("WEB-INF/views/user/register.jsp").forward(req, resp);
             }
         } catch (RuntimeException e) {
             req.setAttribute("errorMsg", e.getMessage());
-            req.getRequestDispatcher("src/webapp/WEB-INF/views/user/register.jsp").forward(req, resp);
+            req.getRequestDispatcher("WEB-INF/views/user/register.jsp").forward(req, resp);
         }
     }
 
     // 退出登录
     private void logout(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         req.getSession().removeAttribute("loginUser");
-        resp.sendRedirect("src/webapp/WEB-INF/views/user/login.jsp");
+        resp.sendRedirect("WEB-INF/views/user/login.jsp");
     }
 
     @Override

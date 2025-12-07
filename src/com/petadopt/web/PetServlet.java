@@ -70,9 +70,9 @@ public class PetServlet extends HttpServlet {
         // 判断是否为管理员
         User loginUser = (User) req.getSession().getAttribute("loginUser");
         if (loginUser != null && "admin".equals(loginUser.getRole())) {
-            req.getRequestDispatcher("src/webapp/WEB-INF/views/admin/petManage.jsp").forward(req, resp);
+            req.getRequestDispatcher("WEB-INF/views/admin/petManage.jsp").forward(req, resp);
         } else {
-            req.getRequestDispatcher("src/webapp/WEB-INF/views/user/petList.jsp").forward(req, resp);
+            req.getRequestDispatcher("WEB-INF/views/user/petList.jsp").forward(req, resp);
         }
     }
 
