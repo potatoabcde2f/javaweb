@@ -1,0 +1,33 @@
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<html>
+<head>
+    <title>宠物领养系统 - 登录</title>
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+<div class="container">
+    <div class="login-box">
+        <h2>宠物领养系统</h2>
+        <form action="/user/login" method="post">
+            <div class="form-group">
+                <label>账号：</label>
+                <input type="text" name="username" required placeholder="请输入账号">
+            </div>
+            <div class="form-group">
+                <label>密码：</label>
+                <input type="password" name="password" required placeholder="请输入密码">
+            </div>
+            <div class="error-msg">${errorMsg}</div>
+            <div class="success-msg">${successMsg}</div>
+            <div class="btn-group">
+                <button type="submit">登录</button>
+                <a href="/WEB-INF/views/user/register.jsp">注册账号</a>
+            </div>
+            <div class="admin-entry">
+                <a href="/WEB-INF/views/admin/adminLogin.jsp">管理员登录</a>
+            </div>
+        </form>
+    </div>
+</div>
+</body>
+</html>
