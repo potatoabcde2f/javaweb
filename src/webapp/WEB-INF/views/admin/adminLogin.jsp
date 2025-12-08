@@ -20,7 +20,7 @@
             <div class="error-msg">${errorMsg}</div>
             <div class="btn-group">
                 <button type="submit">登录</button>
-                <a href="/WEB-INF/views/user/login.jsp">返回用户登录</a>
+                <a href="${pageContext.request.contextPath}/user/toLogin">返回用户登录</a>
             </div>
         </form>
     </div>
