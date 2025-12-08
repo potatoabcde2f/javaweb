@@ -1,392 +1,66 @@
-/* 全局样式重置 */
+/* =========================================
+   1. Design Tokens (禅意变量 - 保持不变)
+   ========================================= */
+:root {
+    --zen-bg: #F4F1EA;       /* 和纸米色 */
+    --zen-surface: #FFFEFA;  /* 米白表面 */
+    --zen-ink: #2B2B2B;      /* 墨色 */
+    --zen-gray: #6E6B65;     /* 灰石色 */
+    --zen-matcha: #607255;   /* 抹茶绿 */
+    --zen-clay: #A85A48;     /* 陶土红 */
+    --zen-gold: #C9A66B;     /* 枯金 */
+    --zen-indigo: #4A5D75;   /* 蓝染 */
+
+    --border-thin: 1px solid var(--zen-ink);
+    --border-light: 1px solid #D6D3CD;
+    --radius-sm: 2px;
+    --sidebar-width: 240px;
+}
+
+/* =========================================
+   2. Global Reset & Typography
+   ========================================= */
+@import url('https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;700&family=Noto+Sans+SC:wght@300;400;500&display=swap');
+
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    font-family: "Microsoft YaHei", sans-serif;
 }
 
 body {
-    background-color: #f5f5f5;
-    color: #333;
+    font-family: "Noto Sans SC", "PingFang SC", sans-serif;
+    background-color: var(--zen-bg);
+    color: var(--zen-ink);
+    line-height: 1.7;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.03'/%3E%3C/svg%3E");
 }
 
-.container, .admin-container {
-    width: 1200px;
-    margin: 0 auto;
-    padding: 20px 0;
+h1, h2, h3, h4, h5, h6 {
+    font-family: "Noto Serif SC", serif;
+    font-weight: 600;
+    letter-spacing: 0.05em;
+    color: var(--zen-ink);
 }
 
-/* 通用样式 */
-h1, h2, h3 {
-    margin-bottom: 20px;
-    color: #2c3e50;
-}
-
-.form-group {
-    margin-bottom: 20px;
-}
-
-.form-group label {
-    display: inline-block;
-    width: 100px;
-    text-align: right;
-    margin-right: 10px;
-    font-weight: bold;
-}
-
-.form-group input, .form-group select, .form-group textarea {
-    padding: 8px 10px;
-    border: 1px solid #ddd;
-    border-radius: 4px;
-    width: 300px;
-    font-size: 14px;
-}
-
-.form-group textarea {
-    width: 500px;
-    resize: vertical;
-}
-
-.btn-group {
-    margin-left: 110px;
-}
-
-button, .btn, .apply-btn, .detail-btn, .back-btn, .add-btn, .edit-btn, .delete-btn, .review-btn, .cancel-btn {
-    display: inline-block;
-    padding: 8px 20px;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-    font-size: 14px;
-    text-align: center;
+a {
     text-decoration: none;
+    color: inherit;
+    transition: all 0.3s ease;
 }
 
-button, .btn, .apply-btn, .add-btn, .review-btn {
-    background-color: #3498db;
-    color: #fff;
+ul { list-style: none; }
+
+/* =========================================
+   3. Layout Containers
+   ========================================= */
+.container {
+    max-width: 1100px;
+    margin: 60px auto;
+    padding: 0 40px;
 }
 
-button:hover, .btn:hover, .apply-btn:hover, .add-btn:hover, .review-btn:hover {
-    background-color: #2980b9;
-}
-
-.back-btn, .cancel-btn {
-    background-color: #95a5a6;
-    color: #fff;
-    margin-left: 10px;
-}
-
-.back-btn:hover, .cancel-btn:hover {
-    background-color: #7f8c8d;
-}
-
-.edit-btn {
-    background-color: #f39c12;
-    color: #fff;
-    margin-right: 10px;
-}
-
-.edit-btn:hover {
-    background-color: #e67e22;
-}
-
-.delete-btn {
-    background-color: #e74c3c;
-    color: #fff;
-}
-
-.delete-btn:hover {
-    background-color: #c0392b;
-}
-
-.error-msg {
-    color: #e74c3c;
-    margin-left: 110px;
-    margin-bottom: 10px;
-}
-
-.success-msg {
-    color: #2ecc71;
-    margin-left: 110px;
-    margin-bottom: 10px;
-}
-
-.tips {
-    display: inline-block;
-    margin-left: 10px;
-    color: #7f8c8d;
-    font-size: 12px;
-}
-
-.empty-tip {
-    text-align: center;
-    padding: 50px 0;
-    color: #7f8c8d;
-    font-size: 16px;
-}
-
-/* 状态标签样式 */
-.status-available {
-    color: #2ecc71;
-    font-weight: bold;
-}
-
-.status-pending {
-    color: #f39c12;
-    font-weight: bold;
-}
-
-.status-adopted {
-    color: #95a5a6;
-    font-weight: bold;
-}
-
-.status-approved {
-    color: #27ae60;
-    font-weight: bold;
-}
-
-.status-rejected {
-    color: #e74c3c;
-    font-weight: bold;
-}
-
-/* 普通用户页面样式 */
-/* 登录/注册页 */
-.login-box {
-    width: 400px;
-    margin: 50px auto;
-    background-color: #fff;
-    padding: 30px;
-    border-radius: 8px;
-    box-shadow: 0 0 10px rgba(0,0,0,0.1);
-}
-
-.login-box h2 {
-    text-align: center;
-    margin-bottom: 30px;
-    color: #3498db;
-}
-
-.admin-login {
-    margin-top: 100px;
-}
-
-.admin-entry {
-    text-align: center;
-    margin-top: 20px;
-}
-
-.admin-entry a {
-    color: #3498db;
-    text-decoration: none;
-}
-
-/* 宠物列表页 */
-.header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 30px;
-}
-
-.search-bar {
-    background-color: #fff;
-    padding: 20px;
-    border-radius: 8px;
-    box-shadow: 0 0 5px rgba(0,0,0,0.1);
-    margin-bottom: 30px;
-}
-
-.search-bar form {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-}
-
-.search-bar select, .search-bar input {
-    padding: 8px 10px;
-    border: 1px solid #ddd;
-    border-radius: 4px;
-}
-
-.search-bar button {
-    margin-left: 10px;
-}
-
-.pet-list {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 30px;
-}
-
-.pet-card {
-    width: 280px;
-    background-color: #fff;
-    border-radius: 8px;
-    box-shadow: 0 0 10px rgba(0,0,0,0.1);
-    overflow: hidden;
-    transition: transform 0.3s;
-}
-
-.pet-card:hover {
-    transform: translateY(-5px);
-}
-
-.pet-img {
-    width: 100%;
-    height: 200px;
-    object-fit: cover;
-}
-
-.pet-info {
-    padding: 15px;
-}
-
-.pet-info h3 {
-    margin-bottom: 10px;
-    color: #2c3e50;
-    font-size: 18px;
-}
-
-.pet-info p {
-    margin-bottom: 8px;
-    font-size: 14px;
-    color: #666;
-}
-
-.pet-info .detail-btn {
-    background-color: #9b59b6;
-    color: #fff;
-    margin-right: 10px;
-}
-
-.pet-info .detail-btn:hover {
-    background-color: #8e44ad;
-}
-
-/* 宠物详情页 */
-.pet-detail {
-    display: flex;
-    background-color: #fff;
-    border-radius: 8px;
-    box-shadow: 0 0 10px rgba(0,0,0,0.1);
-    overflow: hidden;
-}
-
-.pet-img-box {
-    width: 50%;
-}
-
-.detail-img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-}
-
-.pet-detail-info {
-    width: 50%;
-    padding: 30px;
-}
-
-.info-item {
-    margin-bottom: 15px;
-    display: flex;
-}
-
-.info-item .label {
-    width: 80px;
-    font-weight: bold;
-    color: #2c3e50;
-}
-
-.info-item .desc {
-    line-height: 1.5;
-}
-
-/* 领养申请页 */
-.apply-form-box {
-    background-color: #fff;
-    padding: 30px;
-    border-radius: 8px;
-    box-shadow: 0 0 10px rgba(0,0,0,0.1);
-}
-
-/* 申请成功页 */
-.success-box {
-    background-color: #fff;
-    padding: 50px;
-    border-radius: 8px;
-    box-shadow: 0 0 10px rgba(0,0,0,0.1);
-    text-align: center;
-    margin-top: 50px;
-}
-
-.success-box h2 {
-    color: #2ecc71;
-    margin-bottom: 20px;
-}
-
-.tips-list {
-    text-align: left;
-    margin: 20px auto;
-    width: 500px;
-    color: #666;
-}
-
-.tips-list li {
-    margin-bottom: 10px;
-}
-
-/* 我的申请页 */
-.search-apply {
-    background-color: #fff;
-    padding: 20px;
-    border-radius: 8px;
-    box-shadow: 0 0 5px rgba(0,0,0,0.1);
-    margin-bottom: 30px;
-    text-align: center;
-}
-
-.search-apply form {
-    display: inline-flex;
-    align-items: center;
-}
-
-.apply-table-box {
-    background-color: #fff;
-    border-radius: 8px;
-    box-shadow: 0 0 10px rgba(0,0,0,0.1);
-    overflow: hidden;
-}
-
-.apply-table {
-    width: 100%;
-    border-collapse: collapse;
-}
-
-.apply-table th, .apply-table td {
-    padding: 12px 15px;
-    text-align: left;
-    border-bottom: 1px solid #ddd;
-}
-
-.apply-table th {
-    background-color: #f8f9fa;
-    font-weight: bold;
-    color: #2c3e50;
-}
-
-.motive {
-    max-width: 300px;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-}
-
-/* 管理员后台样式 */
+/* 管理后台布局 */
 .admin-container {
     display: flex;
     flex-direction: column;
@@ -394,277 +68,239 @@ button:hover, .btn:hover, .apply-btn:hover, .add-btn:hover, .review-btn:hover {
 }
 
 .admin-header {
-    background-color: #2c3e50;
-    color: #fff;
-    padding: 15px 20px;
+    background-color: var(--zen-surface);
+    height: 70px;
     display: flex;
-    justify-content: space-between;
     align-items: center;
-    border-radius: 8px 8px 0 0;
+    justify-content: space-between;
+    padding: 0 40px;
+    border-bottom: var(--border-thin);
 }
 
 .admin-header h1 {
-    margin: 0;
-    font-size: 20px;
+    font-size: 1.4rem;
+    font-family: "Noto Serif SC", serif;
 }
 
-.admin-operate span {
-    margin-right: 20px;
-}
-
-.admin-operate a {
-    color: #fff;
-    text-decoration: none;
-}
-
-.admin-content-wrap {
+.admin-body {
     display: flex;
     flex: 1;
 }
 
 .admin-sidebar {
-    width: 200px;
-    background-color: #34495e;
-    color: #fff;
-    border-radius: 0 0 0 8px;
-}
-
-.menu-list {
-    list-style: none;
-}
-
-.menu-item {
-    display: block;
-    padding: 15px 20px;
-    color: #ecf0f1;
-    text-decoration: none;
-    border-left: 3px solid transparent;
-}
-
-.menu-item:hover, .menu-item.active {
-    background-color: #2c3e50;
-    border-left: 3px solid #3498db;
+    width: var(--sidebar-width);
+    background-color: var(--zen-bg);
+    border-right: var(--border-thin);
+    flex-shrink: 0;
+    padding: 30px 20px;
 }
 
 .admin-content {
     flex: 1;
-    background-color: #fff;
-    padding: 30px;
-    border-radius: 0 0 8px 0;
-    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    padding: 40px 50px;
+    background-color: var(--zen-surface);
+    overflow-y: auto;
 }
 
-.content-header {
-    display: flex;
-    justify-content: space-between;
+/* =========================================
+   4. Components (Zen Style - 优化版)
+   ========================================= */
+
+/* 按钮 */
+button, .btn, .apply-btn, .detail-btn, .back-btn, .add-btn, .edit-btn, .delete-btn, .review-btn, .cancel-btn {
+    display: inline-flex;
     align-items: center;
+    justify-content: center;
+    padding: 0.7rem 1.5rem;
+    font-family: "Noto Sans SC", sans-serif;
+    font-size: 0.9rem;
+    letter-spacing: 0.05em;
+    background: transparent;
+    border: var(--border-thin);
+    border-radius: var(--radius-sm);
+    color: var(--zen-ink);
+    cursor: pointer;
+    transition: all 0.3s ease;
+    position: relative;
+}
+
+button:hover, .btn:hover {
+    background-color: var(--zen-ink);
+    color: var(--zen-surface);
+    transform: translateY(-2px);
+    box-shadow: 2px 2px 0 0 rgba(0,0,0,0.1);
+}
+
+/* 实心强调按钮 */
+.primary-solid {
+    background-color: var(--zen-matcha);
+    color: white;
+    border: 1px solid var(--zen-matcha);
+}
+.primary-solid:hover {
+    background-color: #4E5D45;
+    border-color: #4E5D45;
+    color: white;
+}
+
+/* 危险按钮 */
+.delete-btn { border-color: var(--zen-clay); color: var(--zen-clay); }
+.delete-btn:hover { background-color: var(--zen-clay); color: white; }
+
+/* 容器卡片 */
+.form-box, .login-box, .success-box, .pet-detail {
+    background: var(--zen-surface);
+    border: var(--border-thin);
+    padding: 50px;
+    box-shadow: 6px 6px 0 0 rgba(0,0,0,0.03); /* 阴影更柔和 */
+}
+
+/* 表单输入 - 对齐优化 */
+.form-group {
     margin-bottom: 30px;
-    border-bottom: 1px solid #ddd;
-    padding-bottom: 10px;
+    position: relative;
+    text-align: left; /* 强制左对齐 */
 }
 
-.admin-search form {
-    gap: 10px;
+.form-group label {
+    display: block;
+    margin-bottom: 10px;
+    font-size: 0.85rem;
+    color: var(--zen-gray);
+    letter-spacing: 0.05em;
 }
 
+.form-group input, .form-group select, .form-group textarea {
+    width: 100%;
+    padding: 12px 5px; /* 调整内边距 */
+    border: none;
+    border-bottom: 1px solid #CCC;
+    background: transparent;
+    font-family: "Noto Sans SC", sans-serif; /* 输入内容改用无衬线体更易读 */
+    font-size: 1rem;
+    color: var(--zen-ink);
+    transition: border-color 0.3s;
+    border-radius: 0;
+    text-align: left; /* 输入文字左对齐 */
+}
+
+.form-group input::placeholder {
+    color: #BBB;
+    font-style: italic;
+    font-size: 0.9rem;
+}
+
+.form-group input:focus, .form-group select:focus, .form-group textarea:focus {
+    outline: none;
+    border-bottom: 1px solid var(--zen-ink);
+}
+
+/* 消息提示条 - 去图标纯文字版 */
+.error-msg, .success-msg {
+    padding: 15px;
+    margin-bottom: 30px;
+    font-size: 0.9rem;
+    border: var(--border-thin);
+    text-align: center;
+    letter-spacing: 0.05em;
+}
+.error-msg {
+    background: #FFFBFB;
+    color: var(--zen-clay);
+    border-color: var(--zen-clay);
+}
+.success-msg {
+    background: #FBFFFC;
+    color: var(--zen-matcha);
+    border-color: var(--zen-matcha);
+}
+
+/* 表格优化 */
 .table-box {
-    overflow-x: auto;
+    background: var(--zen-surface);
+    border: var(--border-thin);
 }
-
-.data-table {
-    width: 100%;
-    border-collapse: collapse;
-}
-
-.data-table th, .data-table td {
-    padding: 12px 15px;
-    text-align: left;
-    border-bottom: 1px solid #ddd;
-}
-
+.data-table { width: 100%; border-collapse: collapse; }
 .data-table th {
-    background-color: #f8f9fa;
-    font-weight: bold;
-    color: #2c3e50;
-}
-
-.operate-col {
-    display: flex;
-    gap: 10px;
-}
-
-/* 统计分析页样式 */
-.stats-section {
-    margin-bottom: 40px;
-}
-
-.stats-chart-group {
-    display: flex;
-    gap: 20px;
-    margin-bottom: 30px;
-}
-
-.stats-chart {
-    flex: 1;
-    background-color: #f8f9fa;
+    font-weight: 500;
+    color: var(--zen-gray);
+    font-size: 0.85rem;
     padding: 20px;
-    border-radius: 8px;
-    text-align: center;
+    border-bottom: var(--border-thin);
+    text-align: left;
 }
-
-.chart-title {
-    font-size: 16px;
-    margin-bottom: 10px;
-    color: #2c3e50;
+.data-table td {
+    padding: 20px;
+    border-bottom: 1px solid #EEE;
+    color: var(--zen-ink);
 }
+.data-table tr:hover { background-color: rgba(0,0,0,0.01); }
 
-.chart-value {
-    font-size: 24px;
-    font-weight: bold;
-    margin-bottom: 15px;
-    color: #3498db;
-}
-
-.progress-bar {
+/* 页面特定样式 */
+.login-box {
     width: 100%;
-    height: 10px;
-    background-color: #eee;
-    border-radius: 5px;
-    overflow: hidden;
+    max-width: 420px; /* 稍微加宽 */
+    margin: 60px auto;
 }
-
-.progress {
-    height: 100%;
-    background-color: #3498db;
-}
-
-.pending-progress {
-    background-color: #f39c12;
-}
-
-.approved-progress {
-    background-color: #2ecc71;
-}
-
-.rejected-progress {
-    background-color: #e74c3c;
-}
-
-.stats-summary {
-    background-color: #f8f9fa;
-    padding: 20px;
-    border-radius: 8px;
-}
-
-.summary-list {
-    list-style: none;
-}
-
-.summary-list li {
+.login-box h2 {
+    font-size: 2rem;
     margin-bottom: 10px;
-    font-size: 14px;
-    color: #333;
+    text-align: center;
+    font-weight: 400;
+}
+.login-sub-title {
+    text-align: center;
+    color: var(--zen-gray);
+    margin-bottom: 40px;
+    font-size: 0.9rem;
+    font-family: "Noto Serif SC", serif;
 }
 
-/* 数据概览页样式 */
-.stats-card-group {
+/* 宠物列表网格 */
+.search-bar {
+    padding: 20px 0;
+    margin-bottom: 40px;
+    border-bottom: var(--border-thin);
     display: flex;
     gap: 20px;
-    margin-bottom: 30px;
 }
-
-.stats-card {
-    flex: 1;
-    background-color: #f8f9fa;
+.search-bar input, .search-bar select {
+    background: var(--zen-surface);
+    border: var(--border-thin);
+    padding: 10px 15px;
+    font-size: 0.9rem;
+}
+.pet-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 40px;
+}
+.pet-card {
+    background: var(--zen-surface);
+    border: var(--border-thin);
+    transition: all 0.3s ease;
+}
+.pet-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 8px 8px 0 0 rgba(0,0,0,0.05);
+}
+.pet-img {
+    width: 100%;
+    height: 220px;
+    object-fit: cover;
+    border-bottom: var(--border-thin);
+    filter: sepia(10%);
+}
+.pet-info {
     padding: 20px;
-    border-radius: 8px;
     text-align: center;
 }
 
-.stats-title {
-    font-size: 16px;
-    margin-bottom: 10px;
-    color: #2c3e50;
-}
+/* 状态标签 */
+.status-available { color: var(--zen-matcha); border: 1px solid var(--zen-matcha); padding: 2px 8px; border-radius: 2px; font-size: 0.75rem; }
+.status-pending { color: var(--zen-gold); border: 1px solid var(--zen-gold); padding: 2px 8px; border-radius: 2px; font-size: 0.75rem; }
+.status-adopted { color: var(--zen-gray); text-decoration: line-through; font-size: 0.75rem; }
+.status-rejected { color: var(--zen-clay); border: 1px solid var(--zen-clay); padding: 2px 8px; border-radius: 2px; font-size: 0.75rem; }
 
-.stats-value {
-    font-size: 32px;
-    font-weight: bold;
-    margin-bottom: 10px;
-    color: #3498db;
-}
-
-.stats-desc {
-    font-size: 14px;
-    color: #7f8c8d;
-}
-
-.quick-operate {
-    background-color: #f8f9fa;
-    padding: 20px;
-    border-radius: 8px;
-}
-
-.operate-btn {
-    margin-right: 15px;
-}
-
-/* 审核页样式 */
-.review-box {
-    background-color: #f8f9fa;
-    padding: 20px;
-    border-radius: 8px;
-}
-
-.review-section {
-    margin-bottom: 30px;
-    padding-bottom: 20px;
-    border-bottom: 1px solid #ddd;
-}
-
-.review-section:last-child {
-    border-bottom: none;
-}
-
-.info-group {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 20px;
-}
-
-.info-item {
-    width: calc(50% - 10px);
-}
-
-.pet-info {
-    display: flex;
-    align-items: center;
-    gap: 20px;
-}
-
-.pet-thumb {
-    width: 100px;
-    height: 100px;
-    border-radius: 4px;
-    object-fit: cover;
-}
-
-.pet-detail p {
-    margin-bottom: 5px;
-}
-
-.apply-detail .detail-item {
-    margin-bottom: 15px;
-}
-
-.review-operate {
-    margin-top: 20px;
-}
-
-.radio-group {
-    margin-bottom: 20px;
-}
-
-.radio-group label {
-    margin-right: 20px;
-}
+/* 实用类 */
+.empty-tip { text-align: center; padding: 60px; color: var(--zen-gray); font-style: italic; }
