@@ -16,4 +16,7 @@ public interface AdoptionApplicationDAO {
     boolean updateApplicationStatus(Integer applicationId, String status);
     // 查询所有申请（管理员）
     List<AdoptionApplication> findAllApplications();
+
+    // --- ✅ 新增：按ID查询详情 ---
+    AdoptionApplication findById(Integer applicationId);
 }

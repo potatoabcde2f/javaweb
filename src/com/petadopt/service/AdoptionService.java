@@ -15,4 +15,7 @@ public interface AdoptionService {
     List<AdoptionApplication> getApplicationsByStatus(String status);
     // 审核申请（通过/拒绝）
     boolean reviewApplication(Integer applicationId, String status, Integer petId);
+
+    // --- ✅ 新增实现 ---
+    AdoptionApplication getApplicationById(Integer applicationId);
 }

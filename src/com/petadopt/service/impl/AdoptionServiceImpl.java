@@ -12,6 +12,8 @@ import com.petadopt.dao.impl.PetDAOImpl;
 import com.petadopt.util.DBUtil;
 
 import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
 
@@ -22,7 +24,6 @@ public class AdoptionServiceImpl implements AdoptionService {
 
     @Override
     public boolean submitApplication(ContactPerson contactPerson, AdoptionApplication application) {
-        // 业务校验
         if (contactPerson.getName() == null || contactPerson.getPhone() == null) {
             throw new RuntimeException("联系人姓名和电话不能为空！");
         }
@@ -30,13 +31,11 @@ public class AdoptionServiceImpl implements AdoptionService {
             throw new RuntimeException("领养宠物ID不能为空！");
         }
 
-        // 先新增联系人，获取contactId后关联申请
         boolean contactSuccess = contactDAO.addContactPerson(contactPerson);
         if (contactSuccess) {
-            // 查询刚新增的联系人（按姓名+电话查询，简化处理）
             ContactPerson cp = getContactByPhone(contactPerson.getPhone());
             application.setContactId(cp.getContactId());
-            application.setStatus("pending"); // 默认待审核
+            application.setStatus("pending");
             return appDAO.addApplication(application);
         }
         return false;
@@ -65,29 +64,33 @@ public class AdoptionServiceImpl implements AdoptionService {
 
     @Override
     public boolean reviewApplication(Integer applicationId, String status, Integer petId) {
-        // 审核通过：更新申请状态+更新宠物状态为adopted
         if ("approved".equals(status)) {
-            // 先更新申请状态
             boolean appSuccess = appDAO.updateApplicationStatus(applicationId, status);
             if (appSuccess) {
-                // 再更新宠物状态
                 return petDAO.updatePetStatus(petId, "adopted");
             }
             return false;
         } else if ("rejected".equals(status)) {
-            // 审核拒绝：仅更新申请状态，宠物状态不变
             return appDAO.updateApplicationStatus(applicationId, status);
         } else {
             throw new RuntimeException("审核状态无效！");
         }
     }
 
-    // 辅助方法：按电话查询联系人（获取最新新增的联系人ID）
+    // --- ✅ 新增实现 ---
+    @Override
+    public AdoptionApplication getApplicationById(Integer applicationId) {
+        if (applicationId == null) {
+            throw new RuntimeException("申请ID不能为空！");
+        }
+        return appDAO.findById(applicationId);
+    }
+
     private ContactPerson getContactByPhone(String phone) {
         String sql = "SELECT * FROM contact_person WHERE phone = ? ORDER BY contact_id DESC LIMIT 1";
         Connection conn = null;
-        java.sql.PreparedStatement pstmt = null;
-        java.sql.ResultSet rs = null;
+        PreparedStatement pstmt = null;
+        ResultSet rs = null;
 
         try {
             conn = DBUtil.getConnection();
