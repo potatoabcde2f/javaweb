@@ -9,6 +9,7 @@ import com.petadopt.dao.PetDAO;
 import com.petadopt.dao.impl.AdoptionApplicationDAOImpl;
 import com.petadopt.dao.impl.ContactPersonDAOImpl;
 import com.petadopt.dao.impl.PetDAOImpl;
+import com.petadopt.util.DBUtil;
 
 import java.sql.Connection;
 import java.sql.SQLException;
@@ -89,7 +90,7 @@ public class AdoptionServiceImpl implements AdoptionService {
         java.sql.ResultSet rs = null;
 
         try {
-            conn = com.petadopt.util.JDBCUtil.getConnection();
+            conn = DBUtil.getConnection();
             pstmt = conn.prepareStatement(sql);
             pstmt.setString(1, phone);
             rs = pstmt.executeQuery();
@@ -102,7 +103,7 @@ public class AdoptionServiceImpl implements AdoptionService {
         } catch (SQLException e) {
             e.printStackTrace();
         } finally {
-            com.petadopt.util.JDBCUtil.close(conn, pstmt, rs);
+            DBUtil.close(conn, pstmt, rs);
         }
         throw new RuntimeException("联系人创建失败！");
     }

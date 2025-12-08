@@ -48,7 +48,7 @@
         <SOURCES />
       </library>
     </orderEntry>
-    <orderEntry type="module-library">
+    <orderEntry type="module-library" exported="">
       <library>
         <CLASSES>
           <root url="jar://D:/01download/apache-tomcat-9.0.109-windows-/apache-tomcat-9.0.109/lib/servlet-api.jar!/" />

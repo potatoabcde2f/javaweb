@@ -21,10 +21,10 @@
             <div class="success-msg">${successMsg}</div>
             <div class="btn-group">
                 <button type="submit">登录</button>
-                <a href="/WEB-INF/views/user/register.jsp">注册账号</a>
+                <a href="${pageContext.request.contextPath}/user/register">注册账号</a>
             </div>
             <div class="admin-entry">
-                <a href="/WEB-INF/views/admin/adminLogin.jsp">管理员登录</a>
+                <a href="${pageContext.request.contextPath}/admin/adminLogin">管理员登录</a>
             </div>
         </form>
     </div>

@@ -2,7 +2,7 @@ package com.petadopt.dao.impl;
 
 import com.petadopt.entity.Pet;
 import com.petadopt.dao.PetDAO;
-import com.petadopt.util.JDBCUtil;
+import com.petadopt.util.DBUtil;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -90,7 +90,7 @@ public class PetDAOImpl implements PetDAO {
         ResultSet rs = null;
 
         try {
-            conn = JDBCUtil.getConnection();
+            conn = DBUtil.getConnection();
             pstmt = conn.prepareStatement(sql);
             // 设置参数
             if (params != null) {
@@ -117,7 +117,7 @@ public class PetDAOImpl implements PetDAO {
         } catch (SQLException e) {
             e.printStackTrace();
         } finally {
-            JDBCUtil.close(conn, pstmt, rs);
+            DBUtil.close(conn, pstmt, rs);
         }
         return pets;
     }
@@ -128,7 +128,7 @@ public class PetDAOImpl implements PetDAO {
         PreparedStatement pstmt = null;
 
         try {
-            conn = JDBCUtil.getConnection();
+            conn = DBUtil.getConnection();
             pstmt = conn.prepareStatement(sql);
             if (params != null) {
                 for (int i = 0; i < params.length; i++) {
@@ -139,7 +139,7 @@ public class PetDAOImpl implements PetDAO {
         } catch (SQLException e) {
             e.printStackTrace();
         } finally {
-            JDBCUtil.close(conn, pstmt, null);
+            DBUtil.close(conn, pstmt, null);
         }
         return false;
     }

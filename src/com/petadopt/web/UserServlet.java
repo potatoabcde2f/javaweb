@@ -22,42 +22,47 @@ public class UserServlet extends HttpServlet {
         String path = req.getPathInfo();
 
         switch (path) {
-            case "/login":
+            case "/toLogin": // 1. 专门用于展示登录页
+                req.getRequestDispatcher("/WEB-INF/views/user/login.jsp").forward(req, resp);
+                break;
+            case "/login":   // 2. 处理登录表单提交
                 login(req, resp);
                 break;
-            case "/register":
+            case "/toRegister": // 3. 专门用于展示注册页
+                req.getRequestDispatcher("/WEB-INF/views/user/register.jsp").forward(req, resp);
+                break;
+            case "/register": // 4. 处理注册表单提交
                 register(req, resp);
                 break;
             case "/logout":
                 logout(req, resp);
                 break;
             default:
-                resp.sendRedirect("/404.jsp");
+                resp.sendRedirect(req.getContextPath() + "/404.jsp");
         }
     }
 
-    // 登录处理
+    // 登录业务处理
     private void login(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String username = req.getParameter("username");
         String password = req.getParameter("password");
 
         try {
             User user = userService.login(username, password);
-            // 存入Session
             req.getSession().setAttribute("loginUser", user);
-            // 管理员跳转后台，普通用户跳转宠物列表
             if ("admin".equals(user.getRole())) {
-                resp.sendRedirect("/admin/index.jsp");
+                // 重定向路径必须加 ContextPath
+                resp.sendRedirect(req.getContextPath() + "/admin/index");
             } else {
-                resp.sendRedirect("/pet/list");
+                resp.sendRedirect(req.getContextPath() + "/pet/list");
             }
         } catch (RuntimeException e) {
             req.setAttribute("errorMsg", e.getMessage());
-            req.getRequestDispatcher("WEB-INF/views/user/login.jsp").forward(req, resp);
+            req.getRequestDispatcher("/WEB-INF/views/user/login.jsp").forward(req, resp);
         }
     }
 
-    // 注册处理
+    // 注册业务处理
     private void register(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         User user = new User();
         user.setUsername(req.getParameter("username"));
@@ -66,23 +71,23 @@ public class UserServlet extends HttpServlet {
         try {
             boolean success = userService.register(user);
             if (success) {
-                // 注册成功跳转登录页
                 req.setAttribute("successMsg", "注册成功！请登录");
-                req.getRequestDispatcher("WEB-INF/views/user/login.jsp").forward(req, resp);
+                req.getRequestDispatcher("/WEB-INF/views/user/login.jsp").forward(req, resp);
             } else {
                 req.setAttribute("errorMsg", "注册失败！");
-                req.getRequestDispatcher("WEB-INF/views/user/register.jsp").forward(req, resp);
+                req.getRequestDispatcher("/WEB-INF/views/user/register.jsp").forward(req, resp);
             }
         } catch (RuntimeException e) {
             req.setAttribute("errorMsg", e.getMessage());
-            req.getRequestDispatcher("WEB-INF/views/user/register.jsp").forward(req, resp);
+            req.getRequestDispatcher("/WEB-INF/views/user/register.jsp").forward(req, resp);
         }
     }
 
     // 退出登录
     private void logout(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         req.getSession().removeAttribute("loginUser");
-        resp.sendRedirect("WEB-INF/views/user/login.jsp");
+        // 退出后重定向到 /user/toLogin，让上面的 case "/toLogin" 负责转发到 JSP
+        resp.sendRedirect(req.getContextPath() + "/user/toLogin");
     }
 
     @Override

@@ -6,7 +6,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-public class JDBCUtil {
+public class DBUtil {
     // 适配 chongwu 数据库（用户名root，密码123456）
     private static final String URL = "jdbc:mysql://localhost:3306/chongwu?useSSL=false&serverTimezone=UTC&allowPublicKeyRetrieval=true";
     private static final String USER = "root";

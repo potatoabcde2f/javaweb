@@ -2,7 +2,7 @@ package com.petadopt.dao.impl;
 
 import com.petadopt.entity.ContactPerson;
 import com.petadopt.dao.ContactPersonDAO;
-import com.petadopt.util.JDBCUtil;
+import com.petadopt.util.DBUtil;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -28,7 +28,7 @@ public class ContactPersonDAOImpl implements ContactPersonDAO {
         ResultSet rs = null;
 
         try {
-            conn = JDBCUtil.getConnection();
+            conn = DBUtil.getConnection();
             pstmt = conn.prepareStatement(sql);
             pstmt.setInt(1, contactId);
             rs = pstmt.executeQuery();
@@ -45,7 +45,7 @@ public class ContactPersonDAOImpl implements ContactPersonDAO {
         } catch (SQLException e) {
             e.printStackTrace();
         } finally {
-            JDBCUtil.close(conn, pstmt, rs);
+            DBUtil.close(conn, pstmt, rs);
         }
         return null;
     }
@@ -66,7 +66,7 @@ public class ContactPersonDAOImpl implements ContactPersonDAO {
         PreparedStatement pstmt = null;
 
         try {
-            conn = JDBCUtil.getConnection();
+            conn = DBUtil.getConnection();
             pstmt = conn.prepareStatement(sql);
             if (params != null) {
                 for (int i = 0; i < params.length; i++) {
@@ -77,7 +77,7 @@ public class ContactPersonDAOImpl implements ContactPersonDAO {
         } catch (SQLException e) {
             e.printStackTrace();
         } finally {
-            JDBCUtil.close(conn, pstmt, null);
+            DBUtil.close(conn, pstmt, null);
         }
         return false;
     }

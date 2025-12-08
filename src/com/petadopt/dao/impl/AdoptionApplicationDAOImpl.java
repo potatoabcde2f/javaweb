@@ -4,7 +4,7 @@ import com.petadopt.entity.AdoptionApplication;
 import com.petadopt.entity.Pet;
 import com.petadopt.entity.ContactPerson;
 import com.petadopt.dao.AdoptionApplicationDAO;
-import com.petadopt.util.JDBCUtil;
+import com.petadopt.util.DBUtil;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -80,7 +80,7 @@ public class AdoptionApplicationDAOImpl implements AdoptionApplicationDAO {
         ResultSet rs = null;
 
         try {
-            conn = JDBCUtil.getConnection();
+            conn = DBUtil.getConnection();
             pstmt = conn.prepareStatement(sql);
             if (params != null) {
                 for (int i = 0; i < params.length; i++) {
@@ -120,7 +120,7 @@ public class AdoptionApplicationDAOImpl implements AdoptionApplicationDAO {
         } catch (SQLException e) {
             e.printStackTrace();
         } finally {
-            JDBCUtil.close(conn, pstmt, rs);
+            DBUtil.close(conn, pstmt, rs);
         }
         return apps;
     }
@@ -131,7 +131,7 @@ public class AdoptionApplicationDAOImpl implements AdoptionApplicationDAO {
         PreparedStatement pstmt = null;
 
         try {
-            conn = JDBCUtil.getConnection();
+            conn = DBUtil.getConnection();
             pstmt = conn.prepareStatement(sql);
             if (params != null) {
                 for (int i = 0; i < params.length; i++) {
@@ -142,7 +142,7 @@ public class AdoptionApplicationDAOImpl implements AdoptionApplicationDAO {
         } catch (SQLException e) {
             e.printStackTrace();
         } finally {
-            JDBCUtil.close(conn, pstmt, null);
+            DBUtil.close(conn, pstmt, null);
         }
         return false;
     }

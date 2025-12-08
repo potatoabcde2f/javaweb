@@ -2,7 +2,7 @@ package com.petadopt.dao.impl;
 
 import com.petadopt.entity.User;
 import com.petadopt.dao.UserDAO;
-import com.petadopt.util.JDBCUtil;
+import com.petadopt.util.DBUtil;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -19,7 +19,7 @@ public class UserDAOImpl implements UserDAO {
         ResultSet rs = null;
 
         try {
-            conn = JDBCUtil.getConnection();
+            conn = DBUtil.getConnection();
             pstmt = conn.prepareStatement(sql);
             pstmt.setString(1, username);
             pstmt.setString(2, password);
@@ -37,7 +37,7 @@ public class UserDAOImpl implements UserDAO {
         } catch (SQLException e) {
             e.printStackTrace();
         } finally {
-            JDBCUtil.close(conn, pstmt, rs);
+            DBUtil.close(conn, pstmt, rs);
         }
         return null;
     }
@@ -49,7 +49,7 @@ public class UserDAOImpl implements UserDAO {
         PreparedStatement pstmt = null;
 
         try {
-            conn = JDBCUtil.getConnection();
+            conn = DBUtil.getConnection();
             pstmt = conn.prepareStatement(sql);
             pstmt.setString(1, user.getUsername());
             pstmt.setString(2, user.getPassword());
@@ -57,7 +57,7 @@ public class UserDAOImpl implements UserDAO {
         } catch (SQLException e) {
             e.printStackTrace();
         } finally {
-            JDBCUtil.close(conn, pstmt, null);
+            DBUtil.close(conn, pstmt, null);
         }
         return false;
     }
@@ -70,7 +70,7 @@ public class UserDAOImpl implements UserDAO {
         ResultSet rs = null;
 
         try {
-            conn = JDBCUtil.getConnection();
+            conn = DBUtil.getConnection();
             pstmt = conn.prepareStatement(sql);
             pstmt.setString(1, username);
             rs = pstmt.executeQuery();
@@ -84,7 +84,7 @@ public class UserDAOImpl implements UserDAO {
         } catch (SQLException e) {
             e.printStackTrace();
         } finally {
-            JDBCUtil.close(conn, pstmt, rs);
+            DBUtil.close(conn, pstmt, rs);
         }
         return null;
     }
