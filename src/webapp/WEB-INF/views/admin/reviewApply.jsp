@@ -91,10 +91,6 @@
                             <span class="label">领养动机：</span>
                             <span class="value">${app.adoptMotive}</span>
                         </div>
-                        <div class="detail-item">
-                            <span class="label">饲养计划：</span>
-                            <span class="value">${app.breedPlan}</span>
-                        </div>
                     </div>
                 </div>
 

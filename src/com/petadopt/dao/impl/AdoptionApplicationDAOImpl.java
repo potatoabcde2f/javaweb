@@ -17,12 +17,15 @@ public class AdoptionApplicationDAOImpl implements AdoptionApplicationDAO {
 
     @Override
     public boolean addApplication(AdoptionApplication application) {
-        String sql = "INSERT INTO adoption_application(pet_id, contact_id, application_date, status) " +
-                "VALUES(?, ?, NOW(), ?)";
+        // ✅ SQL 中删除了 breed_plan
+        String sql = "INSERT INTO adoption_application(pet_id, contact_id, application_date, status, adopt_motive) " +
+                "VALUES(?, ?, NOW(), ?, ?)";
+
         return executeUpdate(sql, new Object[]{
-                application.getPetId(), 
+                application.getPetId(),
                 application.getContactId(),
-                application.getStatus()
+                application.getStatus(),
+                application.getAdoptMotive() // ✅ 只传这一个
         });
     }
 
@@ -64,8 +67,11 @@ public class AdoptionApplicationDAOImpl implements AdoptionApplicationDAO {
 
     @Override
     public List<AdoptionApplication> findAllApplications() {
-        String sql = "INSERT INTO adoption_application(pet_id, contact_id, application_date, status, adopt_motive) " +
-                "VALUES(?, ?, NOW(), ?, ?)";
+        String sql = "SELECT a.*, p.name as pet_name, c.name as contact_name, c.phone, c.email " +
+                "FROM adoption_application a " +
+                "LEFT JOIN pet_info p ON a.pet_id = p.pet_id " +
+                "LEFT JOIN contact_person c ON a.contact_id = c.contact_id " +
+                "ORDER BY a.application_date DESC";
         return executeQuery(sql, null);
     }
 

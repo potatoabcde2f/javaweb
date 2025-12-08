@@ -4,7 +4,7 @@
 <html>
 <head>
     <title>领养申请管理 - 管理员后台</title>
-    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/style.css">
 </head>
 <body>
 <div class="admin-container">
@@ -12,16 +12,16 @@
         <h1>宠物领养系统 - 管理后台</h1>
         <div class="admin-operate">
             <span>欢迎您，管理员</span>
-            <a href="/user/logout">退出登录</a>
+            <a href="${pageContext.request.contextPath}/user/logout">退出登录</a>
         </div>
     </header>
 
     <div class="admin-sidebar">
         <ul class="menu-list">
-            <li><a href="/admin/index" class="menu-item">数据概览</a></li>
-            <li><a href="/pet/list" class="menu-item">宠物管理</a></li>
-            <li><a href="/adoption/manage" class="menu-item active">领养申请管理</a></li>
-            <li><a href="/admin/statistics" class="menu-item">统计分析</a></li>
+            <li><a href="${pageContext.request.contextPath}/admin/index" class="menu-item">数据概览</a></li>
+            <li><a href="${pageContext.request.contextPath}/pet/list" class="menu-item">宠物管理</a></li>
+            <li><a href="${pageContext.request.contextPath}/adoption/manage" class="menu-item active">领养申请管理</a></li>
+            <li><a href="${pageContext.request.contextPath}/admin/statistics" class="menu-item">统计分析</a></li>
         </ul>
     </div>
 
@@ -30,11 +30,10 @@
             <h2>领养申请管理</h2>
         </div>
 
-        <!-- 筛选栏 -->
         <div class="filter-bar">
-            <form action="/adoption/manage" method="get">
+            <form action="${pageContext.request.contextPath}/adoption/manage" method="get">
                 <select name="status">
-                    <option value="">全部申请</option>
+                    <option value="" ${empty status ? 'selected' : ''}>全部申请</option>
                     <option value="pending" ${status == 'pending' ? 'selected' : ''}>待审核</option>
                     <option value="approved" ${status == 'approved' ? 'selected' : ''}>已通过</option>
                     <option value="rejected" ${status == 'rejected' ? 'selected' : ''}>已拒绝</option>
@@ -43,7 +42,6 @@
             </form>
         </div>
 
-        <!-- 申请列表表格 -->
         <div class="table-box">
             <table class="data-table">
                 <thead>
@@ -77,7 +75,7 @@
                             </c:if>
                         </td>
                         <td class="operate-col">
-                            <a href="/adoption/review?appId=${app.applicationId}" class="review-btn">审核</a>
+                            <a href="${pageContext.request.contextPath}/adoption/review?appId=${app.applicationId}" class="review-btn">审核</a>
                         </td>
                     </tr>
                 </c:forEach>
