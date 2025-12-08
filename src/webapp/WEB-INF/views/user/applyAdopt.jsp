@@ -34,10 +34,6 @@
                 <label>领养动机：</label>
                 <textarea name="adoptMotive" required rows="4" placeholder="请说明您想要领养该宠物的原因"></textarea>
             </div>
-            <div class="form-group">
-                <label>饲养计划：</label>
-                <textarea name="breedPlan" required rows="4" placeholder="请说明您领养后的饲养安排（如饮食、居住环境、陪伴时间等）"></textarea>
-            </div>
             <div class="error-msg">${errorMsg}</div>
             <div class="btn-group">
                 <button type="submit">提交申请</button>

@@ -68,4 +68,7 @@ public class AdoptionApplication implements Serializable {
     public void setContactPerson(ContactPerson contactPerson) { 
         this.contactPerson = contactPerson; 
     }
+
+    public String getAdoptMotive() { return adoptMotive; }
+    public void setAdoptMotive(String adoptMotive) { this.adoptMotive = adoptMotive; }
 }

@@ -22,22 +22,28 @@ public class UserServlet extends HttpServlet {
         String path = req.getPathInfo();
 
         switch (path) {
-            case "/toLogin": // 1. 专门用于展示登录页
-                req.getRequestDispatcher("/WEB-INF/views/user/login.jsp").forward(req, resp);
-                break;
-            case "/login":   // 2. 处理登录表单提交
+            case "/login":
                 login(req, resp);
                 break;
-            case "/toRegister": // 3. 专门用于展示注册页
-                req.getRequestDispatcher("/WEB-INF/views/user/register.jsp").forward(req, resp);
-                break;
-            case "/register": // 4. 处理注册表单提交
+            case "/register":
                 register(req, resp);
                 break;
             case "/logout":
                 logout(req, resp);
                 break;
+            // --- 👇 新增以下 3 个分支，配合 JSP 的修改 👇 ---
+            case "/toLogin":
+                req.getRequestDispatcher("/WEB-INF/views/user/login.jsp").forward(req, resp);
+                break;
+            case "/toRegister":
+                req.getRequestDispatcher("/WEB-INF/views/user/register.jsp").forward(req, resp);
+                break;
+            case "/toAdminLogin":
+                req.getRequestDispatcher("/WEB-INF/views/admin/adminLogin.jsp").forward(req, resp);
+                break;
+            // --- 👆 新增结束 👆 ---
             default:
+                // 这里建议用 ContextPath 防止路径错误
                 resp.sendRedirect(req.getContextPath() + "/404.jsp");
         }
     }

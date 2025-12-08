@@ -64,11 +64,8 @@ public class AdoptionApplicationDAOImpl implements AdoptionApplicationDAO {
 
     @Override
     public List<AdoptionApplication> findAllApplications() {
-        String sql = "SELECT a.*, p.name as pet_name, c.name as contact_name, c.phone, c.email " +
-                   "FROM adoption_application a " +
-                   "LEFT JOIN pet_info p ON a.pet_id = p.pet_id " +
-                   "LEFT JOIN contact_person c ON a.contact_id = c.contact_id " +
-                   "ORDER BY a.application_date DESC";
+        String sql = "INSERT INTO adoption_application(pet_id, contact_id, application_date, status, adopt_motive) " +
+                "VALUES(?, ?, NOW(), ?, ?)";
         return executeQuery(sql, null);
     }
 
@@ -96,6 +93,7 @@ public class AdoptionApplicationDAOImpl implements AdoptionApplicationDAO {
                 app.setContactId(rs.getInt("contact_id"));
                 app.setApplicationDate(rs.getTimestamp("application_date"));
                 app.setStatus(rs.getString("status"));
+                app.setAdoptMotive(rs.getString("adopt_motive"));
                 
                 // 设置关联的宠物信息
                 if (rs.getString("pet_name") != null) {
