@@ -3,11 +3,10 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <html>
 <head>
-    <title>统计报表 - 宠物领养系统</title>
+    <title>统计报表</title>
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
-        /* 统计页专属 */
         .report-section {
             background: var(--zen-surface);
             border: var(--border-thin);
@@ -21,8 +20,6 @@
             padding-bottom: 15px;
             border-bottom: 1px dashed #DDD;
         }
-
-        /* 细长进度条 */
         .bar-group { margin-bottom: 25px; }
         .bar-label {
             display: flex;
@@ -43,16 +40,12 @@
             border-radius: 2px;
             transition: width 1s ease;
         }
-
-        /* 关键指标行 */
         .kpi-row {
             display: flex;
             gap: 40px;
             margin-bottom: 40px;
         }
-        .kpi-item {
-            flex: 1;
-        }
+        .kpi-item { flex: 1; }
         .kpi-num {
             font-size: 2.5rem;
             font-family: 'Noto Serif SC', serif;
@@ -71,7 +64,7 @@
 
 <div class="admin-container">
     <header class="admin-header">
-        <h1>统计报表</h1>
+        <h1>后台管理</h1>
         <div class="admin-operate">
             <a href="${pageContext.request.contextPath}/user/logout" class="btn cancel-btn" style="border: none; padding: 0;">退出</a>
         </div>
@@ -80,22 +73,20 @@
     <div class="admin-body">
         <div class="admin-sidebar">
             <ul class="menu-list">
-                <li><a href="${pageContext.request.contextPath}/admin/index" class="menu-item">工作台</a></li>
-                <li><a href="${pageContext.request.contextPath}/pet/list" class="menu-item">宠物管理</a></li>
+                <li><a href="${pageContext.request.contextPath}/admin/index" class="menu-item">数据概览</a></li>
+                <li><a href="${pageContext.request.contextPath}/pet/list" class="menu-item">宠物信息</a></li>
                 <li><a href="${pageContext.request.contextPath}/adoption/manage" class="menu-item">领养审核</a></li>
                 <li><a href="${pageContext.request.contextPath}/admin/statistics" class="menu-item active">统计报表</a></li>
             </ul>
         </div>
 
         <div class="admin-content">
-
             <div class="report-section">
                 <div class="report-title">领养转化漏斗</div>
-
                 <div class="kpi-row">
                     <div class="kpi-item">
                         <div class="kpi-num">${pendingCount + approvedCount + rejectedCount}</div>
-                        <div class="kpi-desc">累计申请总数</div>
+                        <div class="kpi-desc">累计申请</div>
                     </div>
                     <div class="kpi-item">
                         <div class="kpi-num" style="color: var(--zen-matcha);">
@@ -106,11 +97,11 @@
                                 <c:otherwise>0%</c:otherwise>
                             </c:choose>
                         </div>
-                        <div class="kpi-desc">领养成功率</div>
+                        <div class="kpi-desc">成功率</div>
                     </div>
                     <div class="kpi-item">
                         <div class="kpi-num" style="color: var(--zen-gold);">${pendingCount}</div>
-                        <div class="kpi-desc">当前积压审核</div>
+                        <div class="kpi-desc">积压审核</div>
                     </div>
                 </div>
 
@@ -123,31 +114,11 @@
                         <div class="bar-fill" style="width: ${(pendingCount+approvedCount+rejectedCount) > 0 ? approvedCount * 100 / (pendingCount+approvedCount+rejectedCount) : 0}%; background-color: var(--zen-matcha);"></div>
                     </div>
                 </div>
-
-                <div class="bar-group">
-                    <div class="bar-label">
-                        <span><i class="fas fa-clock" style="color:var(--zen-gold)"></i> 等待审核</span>
-                        <span>${pendingCount}</span>
-                    </div>
-                    <div class="bar-track">
-                        <div class="bar-fill" style="width: ${(pendingCount+approvedCount+rejectedCount) > 0 ? pendingCount * 100 / (pendingCount+approvedCount+rejectedCount) : 0}%; background-color: var(--zen-gold);"></div>
-                    </div>
-                </div>
-
-                <div class="bar-group">
-                    <div class="bar-label">
-                        <span><i class="fas fa-times-circle" style="color:var(--zen-clay)"></i> 已驳回</span>
-                        <span>${rejectedCount}</span>
-                    </div>
-                    <div class="bar-track">
-                        <div class="bar-fill" style="width: ${(pendingCount+approvedCount+rejectedCount) > 0 ? rejectedCount * 100 / (pendingCount+approvedCount+rejectedCount) : 0}%; background-color: var(--zen-clay);"></div>
-                    </div>
-                </div>
             </div>
 
             <div class="report-section">
-                <div class="report-title">宠物库存分布</div>
-                <div class="data-grid" style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 20px; text-align: center;">
+                <div class="report-title">库存概览</div>
+                <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 20px; text-align: center;">
                     <div style="padding: 20px; background: #F9F9F9;">
                         <i class="fas fa-dog" style="font-size: 20px; color: var(--zen-gray); margin-bottom: 10px;"></i>
                         <div style="font-size: 1.5rem; font-weight: 600;">${dogCount}</div>
@@ -165,7 +136,6 @@
                     </div>
                 </div>
             </div>
-
         </div>
     </div>
 </div>

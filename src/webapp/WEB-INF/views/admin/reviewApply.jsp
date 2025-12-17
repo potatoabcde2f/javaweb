@@ -1,117 +1,99 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <html>
 <head>
-    <title>审核领养申请 - 管理员后台</title>
-    <link rel="stylesheet" href="/css/style.css">
+    <title>审核详情</title>
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
 <body>
 <div class="admin-container">
     <header class="admin-header">
-        <h1>宠物领养系统 - 管理后台</h1>
+        <h1>后台管理</h1>
         <div class="admin-operate">
-            <span>欢迎您，管理员</span>
-            <a href="/user/logout">退出登录</a>
+            <a href="${pageContext.request.contextPath}/user/logout" class="btn cancel-btn" style="border: none; padding: 0;">退出</a>
         </div>
     </header>
 
-    <div class="admin-sidebar">
-        <ul class="menu-list">
-            <li><a href="/admin/index" class="menu-item">数据概览</a></li>
-            <li><a href="/pet/list" class="menu-item">宠物管理</a></li>
-            <li><a href="/adoption/manage" class="menu-item active">领养申请管理</a></li>
-            <li><a href="/admin/statistics" class="menu-item">统计分析</a></li>
-        </ul>
-    </div>
-
-    <div class="admin-content">
-        <div class="content-header">
-            <h2>审核领养申请</h2>
-            <a href="/adoption/manage" class="back-btn">返回列表</a>
+    <div class="admin-body">
+        <div class="admin-sidebar">
+            <ul class="menu-list">
+                <li><a href="${pageContext.request.contextPath}/admin/index" class="menu-item">数据概览</a></li>
+                <li><a href="${pageContext.request.contextPath}/pet/list" class="menu-item">宠物信息</a></li>
+                <li><a href="${pageContext.request.contextPath}/adoption/manage" class="menu-item active">领养审核</a></li>
+                <li><a href="${pageContext.request.contextPath}/admin/statistics" class="menu-item">统计报表</a></li>
+            </ul>
         </div>
 
-        <div class="review-box">
-            <form action="/adoption/doReview" method="post">
-                <input type="hidden" name="appId" value="${app.applicationId}">
-                <input type="hidden" name="petId" value="${app.pet.petId}">
+        <div class="admin-content">
+            <div class="content-header">
+                <h2>申请详情 #${app.applicationId}</h2>
+                <a href="${pageContext.request.contextPath}/adoption/manage" class="btn cancel-btn">返回列表</a>
+            </div>
 
-                <div class="review-section">
-                    <h3>申请基本信息</h3>
-                    <div class="info-group">
-                        <div class="info-item">
-                            <span class="label">申请ID：</span>
-                            <span class="value">${app.applicationId}</span>
-                        </div>
-                        <div class="info-item">
-                            <span class="label">申请时间：</span>
-                            <span class="value"><fmt:formatDate value="${app.applicationDate}" pattern="yyyy-MM-dd HH:mm:ss" /></span>
+            <div class="form-box" style="max-width: 900px; display: grid; grid-template-columns: 1fr 1fr; gap: 40px;">
+                <div>
+                    <h3 style="border-bottom: 1px solid #CCC; padding-bottom: 10px; margin-bottom: 20px;">申请信息</h3>
+                    <div class="form-group">
+                        <label>申请人</label>
+                        <p>${app.contactPerson.name}</p>
+                    </div>
+                    <div class="form-group">
+                        <label>联系电话</label>
+                        <p>${app.contactPerson.phone}</p>
+                    </div>
+                    <div class="form-group">
+                        <label>邮箱</label>
+                        <p>${app.contactPerson.email}</p>
+                    </div>
+                    <div class="form-group">
+                        <label>居住地址</label>
+                        <p>${app.contactPerson.address}</p>
+                    </div>
+                    <div class="form-group">
+                        <label>目标宠物</label>
+                        <div style="display: flex; align-items: center; gap: 15px; margin-top: 10px;">
+                            <img src="${app.pet.imageUrl}" style="width: 60px; height: 60px; border-radius: 4px; object-fit: cover;">
+                            <div>
+                                <div style="font-weight: 600;">${app.pet.name}</div>
+                                <div style="font-size: 0.85rem; color: #666;">${app.pet.species} / ${app.pet.breed}</div>
+                            </div>
                         </div>
                     </div>
                 </div>
 
-                <div class="review-section">
-                    <h3>宠物信息</h3>
-                    <div class="pet-info">
-                        <img src="${app.pet.imageUrl}" alt="${app.pet.name}" class="pet-thumb">
-                        <div class="pet-detail">
-                            <p>名称：${app.pet.name}</p>
-                            <p>物种：${app.pet.species} | 品种：${app.pet.breed}</p>
-                            <p>年龄：${app.pet.age}岁 | 性别：${app.pet.gender}</p>
-                            <p>状态：${app.pet.status}</p>
-                        </div>
+                <div>
+                    <h3 style="border-bottom: 1px solid #CCC; padding-bottom: 10px; margin-bottom: 20px;">领养意愿</h3>
+                    <div class="form-group">
+                        <label>领养动机</label>
+                        <p style="background: #FAFAFA; padding: 15px; border-radius: 4px; line-height: 1.6;">
+                            ${app.adoptMotive}
+                        </p>
                     </div>
-                </div>
 
-                <div class="review-section">
-                    <h3>申请人信息</h3>
-                    <div class="info-group">
-                        <div class="info-item">
-                            <span class="label">姓名：</span>
-                            <span class="value">${app.contactPerson.name}</span>
-                        </div>
-                        <div class="info-item">
-                            <span class="label">联系电话：</span>
-                            <span class="value">${app.contactPerson.phone}</span>
-                        </div>
-                        <div class="info-item">
-                            <span class="label">电子邮箱：</span>
-                            <span class="value">${app.contactPerson.email == null ? '无' : app.contactPerson.email}</span>
-                        </div>
-                        <div class="info-item">
-                            <span class="label">居住地址：</span>
-                            <span class="value">${app.contactPerson.address}</span>
-                        </div>
-                    </div>
-                </div>
+                    <div style="margin-top: 50px; border-top: 1px solid #EEE; padding-top: 30px;">
+                        <form action="${pageContext.request.contextPath}/adoption/doReview" method="post">
+                            <input type="hidden" name="appId" value="${app.applicationId}">
+                            <input type="hidden" name="petId" value="${app.pet.petId}">
 
-                <div class="review-section">
-                    <h3>申请详情</h3>
-                    <div class="apply-detail">
-                        <div class="detail-item">
-                            <span class="label">领养动机：</span>
-                            <span class="value">${app.adoptMotive}</span>
-                        </div>
-                    </div>
-                </div>
+                            <label style="display: block; margin-bottom: 15px; font-weight: 500;">审核决定：</label>
+                            <div style="display: flex; gap: 20px; margin-bottom: 30px;">
+                                <label style="display: flex; align-items: center; gap: 8px; cursor: pointer;">
+                                    <input type="radio" name="status" value="approved" required>
+                                    <span style="color: var(--zen-matcha);">通过</span>
+                                </label>
+                                <label style="display: flex; align-items: center; gap: 8px; cursor: pointer;">
+                                    <input type="radio" name="status" value="rejected" required>
+                                    <span style="color: var(--zen-clay);">拒绝</span>
+                                </label>
+                            </div>
 
-                <div class="review-section">
-                    <h3>审核操作</h3>
-                    <div class="review-operate">
-                        <div class="radio-group">
-                            <label>
-                                <input type="radio" name="status" value="approved" required> 审核通过
-                            </label>
-                            <label>
-                                <input type="radio" name="status" value="rejected" required> 审核拒绝
-                            </label>
-                        </div>
-                        <div class="btn-group">
-                            <button type="submit">提交审核</button>
-                            <a href="/adoption/manage" class="cancel-btn">取消</a>
-                        </div>
+                            <button type="submit" class="primary-solid">提交结果</button>
+                        </form>
                     </div>
                 </div>
-            </form>
+            </div>
         </div>
     </div>
 </div>
